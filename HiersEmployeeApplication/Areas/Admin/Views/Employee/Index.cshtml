@@ -7,9 +7,18 @@
 
 <h2>View All Employees</h2>
 
-<p>
-    @Html.Partial("_CreateButtonPartial")
-</p>
+<div>
+    <p class="pull-left">
+        @Html.Partial("_CreateButtonPartial")
+    </p>
+   @using (Html.BeginForm("Index", "Employee", FormMethod.Get))
+   {
+       @Html.TextBox("search")<input type="submit"  value="search" />
+   }
+</div>
+
+
+
 <table class="table table-condensed table-striped">
     <tr class="success">
         <th>

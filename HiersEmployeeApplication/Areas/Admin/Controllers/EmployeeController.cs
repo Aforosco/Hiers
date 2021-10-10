@@ -12,14 +12,17 @@ using HiersEmployeeApplication.Models;
 
 namespace HiersEmployeeApplication.Areas.Admin.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class EmployeeController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Admin/Employee
-        public async Task<ActionResult> Index()
+        public  ActionResult Index(string search )
         {
-            return View(await db.Employees.ToListAsync());
+            var employee = db.Employees.Where(s=>s.FirstName.Contains(search)|| search==null).ToList();
+
+            return View(employee);
         }
 
         // GET: Admin/Employee/Details/5
