@@ -38,12 +38,24 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Department, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Department, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
-            </div>
+        @*<div class="form-group">
+        @Html.LabelFor(model => model.Department, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Department, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
+        </div>
+    </div>
+        *@
+
+        <div class="form-group col-md-offset-2  ">
+        <label for="Department">Department</label>
+            <select class="form-control" id="Id" name="Department">
+                <option value="">Please Select</option>
+                @foreach (var dept in ViewBag.Department)
+                {
+                    <option value="@dept.Name">@dept.Name</option>
+                }
+            </select>
         </div>
 
         <div class="form-group">

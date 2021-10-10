@@ -12,111 +12,107 @@ using HiersEmployeeApplication.Models;
 
 namespace HiersEmployeeApplication.Areas.Admin.Controllers
 {
-    [Authorize(Roles ="Admin")]
-    public class EmployeeController : Controller
+    public class DepartmentController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Admin/Employee
-        public  ActionResult Index(string search )
+        // GET: Admin/Department
+        public async Task<ActionResult> Index()
         {
-            var employee = db.Employees.Where(s=>s.FirstName.Contains(search)|| search==null).ToList();
-
-            return View(employee);
+            return View(await db.Departments.ToListAsync());
         }
 
-        // GET: Admin/Employee/Details/5
+        // GET: Admin/Department/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = await db.Employees.FindAsync(id);
-            if (employee == null)
+            Department department = await db.Departments.FindAsync(id);
+            if (department == null)
             {
                 return HttpNotFound();
             }
-            return View(employee);
+            return View(department);
         }
 
-        // GET: Admin/Employee/Create
+        // GET: Admin/Department/Create
         public ActionResult Create()
         {
-            ViewBag.Department = db.Departments.ToList();
             return View();
         }
 
-        // POST: Admin/Employee/Create
+        // POST: Admin/Department/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "EmployeeId,FirstName,LastName,DateOfBirth,Department")] Employee employee)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Name")] Department department)
         {
             if (ModelState.IsValid)
             {
-                db.Employees.Add(employee);
+                db.Departments.Add(department);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(employee);
+            return View(department);
         }
 
-        // GET: Admin/Employee/Edit/5
+        // GET: Admin/Department/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = await db.Employees.FindAsync(id);
-            if (employee == null)
+            Department department = await db.Departments.FindAsync(id);
+            if (department == null)
             {
                 return HttpNotFound();
             }
-            return View(employee);
+            return View(department);
         }
 
-        // POST: Admin/Employee/Edit/5
+        // POST: Admin/Department/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "EmployeeId,FirstName,LastName,DateOfBirth,Department")] Employee employee)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Name")] Department department)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(employee).State = EntityState.Modified;
+                db.Entry(department).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(employee);
+            return View(department);
         }
 
-        // GET: Admin/Employee/Delete/5
+        // GET: Admin/Department/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Employee employee = await db.Employees.FindAsync(id);
-            if (employee == null)
+            Department department = await db.Departments.FindAsync(id);
+            if (department == null)
             {
                 return HttpNotFound();
             }
-            return View(employee);
+            return View(department);
         }
 
-        // POST: Admin/Employee/Delete/5
+        // POST: Admin/Department/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Employee employee = await db.Employees.FindAsync(id);
-            db.Employees.Remove(employee);
+            Department department = await db.Departments.FindAsync(id);
+            db.Departments.Remove(department);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
