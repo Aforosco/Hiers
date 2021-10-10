@@ -1,0 +1,6 @@
+﻿@model HiersEmployeeApplication.Areas.Admin.Models.SmallButtonModel
+
+<a  type ="button" class="btn @Model.ButtonType btn-sm" href="@Url.Action(Model.Action)@Model.ActionParameter">
+     <span class="glyphicon glyphicon-list"></span>
+      <span class="sr-only">@Model.Text</span>  
+</a>
